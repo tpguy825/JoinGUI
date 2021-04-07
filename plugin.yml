@@ -1,0 +1,6 @@
+---
+name: JoinGUI
+version: 0.0.1
+main: tpguy825\JoinGUI\Main
+api: 3.18.1
+...
