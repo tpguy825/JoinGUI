@@ -1,0 +1,9 @@
+  
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/tpguy825/JoinGUI
+build-by-default: true
+branches:
+- main
+projects:
+  JoinGUI:
+    path: "plugin-files"
+...
