@@ -1,24 +1,30 @@
-# Set the plugin here!
-command-mode: console
+command-mode: console # Use player to set it to run commands as the player, or console to run the commands as the server console.
 join-first-time: false
 commands-on-close:
 - say Hello!
-Mode: SimpleForm
-title: KygekJoinUI
-content: Change in config.yml!
+
+Mode: SimpleForm # can be SimpleForm or ModalForm
+title: KygekJoinUI # the title at the top of the ui
+content: Change in config.yml! # small text at the top of the screen, just below the title
 Buttons:
   SimpleForm:
-  - name: "Ok"
-    image: "textures/ui/confirm"
-    commands:
-    - "say Hello!"
+  - name: "button1" # text displayed on the button
+    image: "https://www.bareinternational.com/wp-content/uploads/2016/01/number-1.png" # image to be displayed to the left of the button. Web url's allowed.
+    commands: # list of commands to run on button press, command-mode can change who runs these
+    - "say {PLAYER} selected simpleform button1!"
+  
+  - name: "button2"
+    image: "http://freepngdownload.com/image/thumb/number-2-png-free-download-4.png&ehk=iWleDrcbmhrdN5ERY30d1kT/PuZl9wap6Vrec6hGHDU%3d&risl=&pid=ImgRaw"
+    commands: 
+    - "say {PLAYER} selected simpleform button2!"
+
   ModalForm:
-    B1:
-      name: Button1
-      command: say Button1!
+    B1: # unique identifier for that button
+      name: Button1 # button text
+      command: say {PLAYER} pressed modalform Button1! # commands to run on player click
     B2:
       name: Button2
-      command: say Button2!
+      command: say {PLAYER} pressed modalform Button2!
 
 
 # Whether to check for plugin updates (Recommended)
@@ -27,6 +33,5 @@ check-updates: true
 
 ##### DANGER ZONE #####
 # Do not change this (Only for internal use)!
-config-version: 1.5
+config-version: 1
 #######################
-...
