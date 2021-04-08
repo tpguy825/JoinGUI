@@ -33,8 +33,8 @@ class Main extends PluginBase implements Listener {
 			$this->saveResource("config.yml");
 			return;
 		}
-		if (version_compare("1.5", $this->getConfig()->get("config-version"))) {
-			$this->getLogger()->notice("Your configuration file is outdated, updating the config.yml...");
+		if (version_compare("1", $this->getConfig()->get("config-version"))) {
+			$this->getLogger()->notice("Your config.yml is outdated/you are using an old version of the plugin!");
 			$this->getLogger()->notice("The old configuration file can be found at config_old.yml");
 			rename($this->getDataFolder()."config.yml", $this->getDataFolder()."config_old.yml");
 			$this->saveResource("config.yml");
@@ -112,13 +112,13 @@ class Main extends PluginBase implements Listener {
 				case true:
 					$command = $this->getConfig()->getNested("Buttons.ModalForm.B1.command");
 					if ($command !== null) {
-						$this->getServer()->dispatchCommand($this->commandMode($player), str_replace("{player}", $player->getName(), $command));
+						$this->getServer()->dispatchCommand($this->commandMode($player), str_replace("{PLAYER}", $player->getName(), $command));
 					}
 					break;
 				case false:
 					$command = $this->getConfig()->getNested("Buttons.ModalForm.B2.command");
 					if ($command !== null) {
-						$this->getServer()->dispatchCommand($this->commandMode($player), str_replace("{player}", $player->getName(), $command));
+						$this->getServer()->dispatchCommand($this->commandMode($player), str_replace("{PLAYER}", $player->getName(), $command));
 					}
 					break;
 			}
@@ -141,7 +141,7 @@ class Main extends PluginBase implements Listener {
 			return;
 		}
 		self::$mode = "SimpleForm";
-		$this->getLogger()->error(TextFormat::RED.("Incorrect mode have been set in the config.yml, changing the mode to SimpleForm..."));
+		$this->getLogger()->error(TextFormat::RED."The mode in config.yml is invalid, changing the mode to SimpleForm");
 		$content = file_get_contents($this->getDataFolder()."config.yml");
 		$yml = yaml_parse($content);
 		$config = str_replace("Mode: ".$yml["Mode"] ,"Mode: SimpleForm" ,$content);
@@ -149,16 +149,16 @@ class Main extends PluginBase implements Listener {
 		$file = fopen($this->getDataFolder()."config.yml", "w");
 		fwrite($file, $config);
 		fclose($file);
+		$this->getLogger()->info(TextFormat::ORANGE . "Changed mode to SimpleForm");
 	}
 
 	private function replace(Player $player, string $text) : string {
-		$from = ["{world}", "{player}", "{online}", "{max_online}", "{line}"];
+		$from = ["{WORLD}", "{PLAYER}", "{ONLINE}", "{MAX_ONLINE}"];
 		$to = [
 			$player->getLevel()->getName(),
 			$player->getName(),
 			count($this->getServer()->getOnlinePlayers()),
 			$this->getServer()->getMaxPlayers(),
-			"\n"
 		];
 		return str_replace($from, $to, $text);
 	}
@@ -167,7 +167,7 @@ class Main extends PluginBase implements Listener {
 		if (stripos($this->getConfig()->get("command-mode"), "console") !== false) return new ConsoleCommandSender();
 		elseif (stripos($this->getConfig()->get("command-mode"), "player") !== false) return $player;
 		else {
-			$this->getLogger()->error(TextFormat::RED.("Incorrect command mode have been set in the config.yml, changing the command mode to console..."));
+			$this->getLogger()->error(TextFormat::RED.("The command mode in config.yml is invalid, changing the mode to console"));
 			$this->getConfig()->set("command-mode", "console");
 			$this->getConfig()->save();
 			return new ConsoleCommandSender();
@@ -176,7 +176,7 @@ class Main extends PluginBase implements Listener {
 
 	private function dispatchCommandsOnClose($player) {
 		foreach ($this->getConfig()->get("commands-on-close") as $command) {
-			$this->getServer()->dispatchCommand($this->commandMode($player), str_replace("{player}", $player->getName(), $command));
+			$this->getServer()->dispatchCommand($this->commandMode($player), str_replace("{PLAYER}", $player->getName(), $command));
 		}
 	}
 
