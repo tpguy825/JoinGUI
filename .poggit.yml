@@ -6,4 +6,9 @@ branches:
 projects:
   JoinGUI:
     path: "plugin-files"
+    libs:
+    - src: jojoe77777/FormAPI/libFormAPI
+      version: ^1.3
+    - src: JackMD/UpdateNotifier/UpdateNotifier
+      version: ^2.1
 ...
