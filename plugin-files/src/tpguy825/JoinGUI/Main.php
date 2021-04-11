@@ -149,7 +149,7 @@ class Main extends PluginBase implements Listener {
 		$file = fopen($this->getDataFolder()."config.yml", "w");
 		fwrite($file, $config);
 		fclose($file);
-		$this->getLogger()->info(TextFormat::ORANGE . "Changed mode to SimpleForm");
+		$this->getLogger()->info(TextFormat::GOLD . "Changed mode to SimpleForm");
 	}
 
 	private function replace(Player $player, string $text) : string {
